@@ -1,0 +1,4 @@
+/vendor/
+.env
+.env.local
+/public/img/
