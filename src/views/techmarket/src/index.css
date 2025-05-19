@@ -1,7 +1,21 @@
+:root{
+    --background-blue: #6EB2FF;
+    --text-blue: #0077FF;
+    --font-sizing-for-headers: 18px;
+    --font-sizing-for-headers2: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 body{
   margin: 0;
 }
 
 h1{
   margin: 0;
+}
+
+a{
+  margin: 0;
+  display: block;
+  text-decoration: none;
 }

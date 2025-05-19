@@ -1,11 +1,3 @@
-:root{
-    --background-blue: #6EB2FF;
-    --text-blue: #0077FF;
-    --font-sizing-for-headers: 18px;
-    --font-sizing-for-headers2: 25px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
 .Layout{
     display: flex;
     flex-direction: column;
@@ -19,7 +11,7 @@
 }
 
 .Header,
-.Footer {
+.Footer{
   background-color: var(--background-blue);
   color: white;
   position: sticky;
@@ -36,7 +28,7 @@
     border-top-right-radius: 15px;
 }
 
-.Header2 {
+.Header2{
   display: flex;
   justify-content: space-around;
   width: 100%;
@@ -44,7 +36,7 @@
   overflow: hidden;
 }
 
-.Header2 a {
+.Header2 a{
   flex: 1;
   text-decoration: none;
   background-color: white;
@@ -61,4 +53,42 @@
 .Header2 a:hover{
   background-color: #c6e1ff;
   transform: scale(1.1);
+}
+
+.Navs{
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 15px;
+}
+
+.Navs2{
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 15px;
+}
+
+.logos{
+    width: 40px;
+    height: 40px;
+    transition: all 0.2s ease-in-out;
+}
+
+.logos:hover{
+    transform: scale(1.3);
+}
+
+.Phone{
+  opacity: 70%;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 15px;
 }
