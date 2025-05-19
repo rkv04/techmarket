@@ -8,7 +8,7 @@ const BackgroundGrid = () => {
       <motion.div
         className="background-grid"
         initial={{ x: 0 }}
-        animate={{ x: -1810 }}
+        animate={{ x: -1730 }}
         transition={{
           duration: 20,
           repeat: Infinity,
@@ -22,7 +22,7 @@ const BackgroundGrid = () => {
       
       <motion.div
         className="background-grid"
-        initial={{ x: 1810 }}
+        initial={{ x: 1730 }}
         animate={{ x: 0 }}
         transition={{
           duration: 20,
