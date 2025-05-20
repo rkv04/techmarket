@@ -1,7 +1,8 @@
 {
     "require": {
         "slim/slim": "4.*",
-        "slim/psr7": "^1.7"
+        "slim/psr7": "^1.7",
+        "phpmailer/phpmailer": "^6.10"
     },
     "autoload": {
         "psr-4": {

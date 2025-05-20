@@ -26,7 +26,12 @@ class UserModel {
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare("INSERT INTO User (name, email, password) VALUES (?, ?, ?)");
         $stmt->execute([$user["name"], $user["email"], $user["password"]]);
-        return $db->lastInsertId();
+    }
+
+    public static function updatePasswordByEmail($email, $password) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("UPDATE User SET password = ? WHERE email = ?");
+        $stmt->execute([$password, $email]);
     }
 }
 

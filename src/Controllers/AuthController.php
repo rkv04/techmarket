@@ -6,16 +6,21 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use App\Services\AuthService;
+use App\Exceptions\AuthException;
+use App\Exceptions\ValidationException;
+use App\Models\UserModel;
 
 class AuthController {
     public static function login(Request $request, Response $response) {
         $user = $request->getParsedBody();
-        $user = AuthService::login($user["email"], $user["password"]);
-        if ($user === null) {
-            $response->getBody()->write(json_encode(["error" => "Incorrect email address or password"]));
+        try {
+            AuthService::login($user['email'], $user['password']);
+            return $response->withHeader("Content-Type", "application/json")->withStatus(200);
+        }
+        catch (AuthException $e) {
+            $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
             return $response->withHeader("Content-Type", "application/json")->withStatus(409);
         }
-        return $response->withHeader("Content-Type", "application/json")->withStatus(200);
     }
 
     public static function logout(Request $request, Response $response) {
@@ -26,13 +31,44 @@ class AuthController {
     
     public static function register(Request $request, Response $response) {
         $user = $request->getParsedBody();
-        $userId = AuthService::register($user);
-        if ($userId === null) {
-            $response->getBody()->write(json_encode(["error" => "A user with this email already exists"]));
+        try {
+            AuthService::register($user);
+            $response->getBody()->write(json_encode(['message' => 'Successfully registered']));
+            return $response->withHeader("Content-Type", "application/json")->withStatus(201);
+        }
+        catch (AuthException $e) {
+            $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
             return $response->withHeader("Content-Type", "application/json")->withStatus(409);
         }
-        $response->getBody()->write(json_encode($userId));
-        return $response->withHeader("Content-Type", "application/json")->withStatus(201);
+    }
+
+    public static function handlePasswordForgotRequest(Request $request, Response $response) {
+        $email = $request->getParsedBody()['email'];
+        try {
+            AuthService::handlePasswordForgotRequest($email);
+            $response->getBody()->write(json_encode(['message' => 'Reset link sent to email']));
+            return $response->withHeader("Content-Type", "application/json")->withStatus(200);
+        }
+        catch (AuthException $e) {
+            $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+            return $response->withHeader("Content-Type", "application/json")->withStatus(409);
+        }
+    }
+
+    public static function handlePasswordResetRequest(Request $request, Response $response) {
+        $data = $request->getParsedBody();
+        $token = $data['token'];
+        $password = $data['password'];
+        $passwordRepeated = $data['passwordRepeated'];
+        try {
+            AuthService::handlePasswordResetRequest($token, $password, $passwordRepeated);
+            $response->getBody()->write(json_encode(['message' => 'Password successfully changed']));
+            return $response->withHeader("Content-Type", "application/json")->withStatus(200);
+        }
+        catch (ValidationException $e) {
+            $response->getBody()->write(json_encode(["error" => $e->getMessage()]));
+            return $response->withHeader("Content-Type", "application/json")->withStatus(410);
+        }
     }
 }
 

@@ -17,12 +17,12 @@ class Middleware {
     }
 
     public static function initSession($request, $handler) {
-        ini_set('session.gc_maxlifetime', 15);
+        ini_set('session.gc_maxlifetime', 15); // todo
         session_set_cookie_params([
             'lifetime' => 0,
             'path' => '/',
             'domain' => '',
-            'secure' => true,
+            'secure' => false,
             'httponly' => true,
         ]);
         session_start();
