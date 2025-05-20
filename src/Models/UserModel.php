@@ -28,10 +28,10 @@ class UserModel {
         $stmt->execute([$user["name"], $user["email"], $user["password"]]);
     }
 
-    public static function updatePasswordByEmail($email, $password) {
+    public static function updatePasswordByEmail($email, $passwordHash) {
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare("UPDATE User SET password = ? WHERE email = ?");
-        $stmt->execute([$password, $email]);
+        $stmt->execute([$passwordHash, $email]);
     }
 }
 

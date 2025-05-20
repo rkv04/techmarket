@@ -6,9 +6,9 @@ use App\Db\Database;
 
 class TokenModel {
     public static function addUserResetToken($email, $token, $expires_at) {
-        $old_token = TokenModel::getUserResetTokenByEmail($email);
+        $old_token = self::getUserResetTokenByEmail($email);
         if ($old_token !== null) {
-            TokenModel::deleteUserResetToken($email);
+            self::deleteUserResetToken($email);
         }
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare("INSERT INTO Password_reset_token (email, token, expires_at) VALUES (?, ?, ?)");
