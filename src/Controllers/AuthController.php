@@ -28,7 +28,7 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => $e->getMessage()], 500);
+            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
         }
     }
 
@@ -50,7 +50,7 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => $e->getMessage()], 500);
+            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
         }
     }
 
@@ -64,7 +64,7 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => $e->getMessage()], 500);
+            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
         }
     }
 
@@ -84,7 +84,7 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 410);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => $e->getMessage()], 500);
+            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
         }
     }
 
