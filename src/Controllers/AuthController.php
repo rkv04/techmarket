@@ -19,7 +19,7 @@ class AuthController {
         $password = $user['password'] ?? null;
         try {
             AuthService::login($email, $password);
-            return self::jsonResponse($response, ['message' => 'Successfully authorized'], 200);
+            return self::jsonResponse($response, ['message' => 'LOGIN_SUCCESS'], 200);
         }
         catch (AuthException $e) {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 409);
@@ -28,20 +28,20 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
         }
     }
 
     public static function logout(Request $request, Response $response) {
         AuthService::logout();
-        return self::jsonResponse($response, ['message' => 'Logged out successfully'], 200);
+        return self::jsonResponse($response, ['message' => 'LOGOUT_SUCCESS'], 200);
     }
     
     public static function register(Request $request, Response $response) {
         $user = $request->getParsedBody();
         try {
             AuthService::register($user);
-            return self::jsonResponse($response, ['message' => 'Successfully registered'], 201);
+            return self::jsonResponse($response, ['message' => 'REGISTER_SUCCESS'], 201);
         }
         catch (AuthException $e) {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 409);
@@ -50,7 +50,7 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
         }
     }
 
@@ -58,13 +58,13 @@ class AuthController {
         $email = $request->getParsedBody()['email'] ?? null;
         try {
             AuthService::handlePasswordForgotRequest($email);
-            return self::jsonResponse($response, ['message' => 'Reset link sent to email'], 200);
+            return self::jsonResponse($response, ['message' => 'PASSWORD_RESET_LINK_SENT'], 200);
         }
         catch (ValidationException $e) {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
         }
     }
 
@@ -75,7 +75,7 @@ class AuthController {
         $passwordRepeated = $data['passwordRepeated'] ?? null;
         try {
             AuthService::handlePasswordResetRequest($token, $password, $passwordRepeated);
-            return self::jsonResponse($response, ['message' => 'Password successfully changed'], 200);
+            return self::jsonResponse($response, ['message' => 'PASSWORD_CHANGED'], 200);
         }
         catch (ValidationException $e) {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
@@ -84,7 +84,7 @@ class AuthController {
             return self::jsonResponse($response, ['error' => $e->getMessage()], 410);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
         }
     }
 

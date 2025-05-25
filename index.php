@@ -9,6 +9,8 @@ use App\Controllers\UserController;
 use App\Controllers\AuthController;
 use App\Controllers\ProductController;
 use App\Middleware\Middleware;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 $app = AppFactory::create();
 
@@ -27,6 +29,11 @@ $app->group("/api", function (RouteCollectorProxy $group) {
     });
 
     $group->get('/products', [ProductController::class, 'getProducts'])->add([Middleware::class, 'verifySession']);
+
+    $group->any('/{routes:.+}', function (Request $request, Response $response) {
+        $response->getBody()->write(json_encode(['error' => 'Not Found']));
+        return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+    });
 
 });
 

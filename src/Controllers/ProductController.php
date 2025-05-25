@@ -15,8 +15,12 @@ class ProductController {
             return self::jsonResponse($response, $products, 200);
         }
         catch (Throwable $e) {
-            return self::jsonResponse($response, ['error' => 'Internal server error'], 500);
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
         }
+    }
+
+    public static function getProductCategories(Request $request, Response $response) {
+        
     }
 
     private static function jsonResponse(Response $response, $data, $status) {

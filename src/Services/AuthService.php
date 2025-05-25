@@ -13,13 +13,13 @@ use DateTime;
 class AuthService {
     public static function login($email, $password) {
         if (empty($password) || empty($email)) {
-            throw new ValidationException("All fields are required");
+            throw new ValidationException("VALIDATION_REQUIRED_FIELDS");
         }
         if (strlen($password) > 72) {
-            throw new ValidationException("Password too long");
+            throw new ValidationException("VALIDATION_PASSWORD_TOO_LONG");
         }
         if (!self::validateEmail($email)) {
-            throw new ValidationException("Incorrect email address format");
+            throw new ValidationException("VALIDATION_INVALID_EMAIL");
         }
         $user = UserModel::getUserByEmail($email);
         if ($user !== null && password_verify($password, $user['password'])) {
@@ -27,7 +27,7 @@ class AuthService {
             $_SESSION['lastActivity'] = time();
             return $user;
         }
-        throw new AuthException("Incorrect email address or password");
+        throw new AuthException("AUTH_INVALID_CREDENTIALS");
     }
 
     public static function logout() {
@@ -37,16 +37,16 @@ class AuthService {
     
     public static function register($user) {
         if (empty($user['password']) || empty($user['email']) || empty($user['name'])) {
-            throw new ValidationException("All fields are required");
+            throw new ValidationException("VALIDATION_REQUIRED_FIELDS");
         }
         if (UserModel::getUserByEmail($user['email'])) {
-            throw new AuthException("A user with this email already exists");
+            throw new AuthException("EMAIL_ALREADY_EXISTS");
         }
         if (!self::validateEmail($user['email'])) {
-            throw new ValidationException('Incorrect email address format');
+            throw new ValidationException('VALIDATION_INVALID_EMAIL');
         }
         if (!self::validatePassword($user['password'])) {
-            throw new ValidationException('The password does not meet the requirements');
+            throw new ValidationException('VALIDATION_WEAK_PASSWORD');
         }
         $user['password'] = Utils::getBcryptHash($user['password']);
         UserModel::addUser($user);
@@ -54,7 +54,7 @@ class AuthService {
 
     public static function handlePasswordForgotRequest($email) {
         if (!self::validateEmail($email)) {
-            throw new ValidationException('Incorrect email address format');
+            throw new ValidationException('VALIDATION_INVALID_EMAIL');
         }
         if (!UserModel::getUserByEmail($email)) {
             return;
@@ -75,17 +75,17 @@ class AuthService {
 
     public static function handlePasswordResetRequest($receivedToken, $password, $passwordRepeated) {
         if (empty($password) || empty($passwordRepeated)) {
-            throw new ValidationException("All fields are required");
+            throw new ValidationException("VALIDATION_REQUIRED_FIELDS");
         }
         $tokenEntry = self::verifyResetToken($receivedToken);
         if ($tokenEntry === null) {
-            throw new TokenException('Token expired or invalid');
+            throw new TokenException('AUTH_TOKEN_INVALID');
         }
         if (!self::validatePassword($password)) {
-            throw new ValidationException('The password does not meet the requirements');
+            throw new ValidationException('VALIDATION_WEAK_PASSWORD');
         }
         if ($password !== $passwordRepeated) {
-            throw new ValidationException('The passwords entered do not match');
+            throw new ValidationException('VALIDATION_PASSWORD_MISMATCH');
         }
         $passwordHash = Utils::getBcryptHash($password);
         UserModel::updatePasswordByEmail($tokenEntry['email'], $passwordHash);

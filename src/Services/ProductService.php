@@ -11,33 +11,56 @@ class ProductService {
         return $products;
     }
 
-    private static function prepareQueryParams($queryParamsRaw) {
-        $filters = [
+    private static function prepareQueryParams($queryParams) {
+        $queryParams = self::processUnsetValues($queryParams);
+        self::validatePagination($queryParams);
+        self::validateSorting($queryParams);
+        self::validateOtherParameters($queryParams);
+        return $queryParams;
+    }
+
+    private static function processUnsetValues(array &$queryParamsRaw) {
+        return [
             'page' => $queryParamsRaw['page'] ?? 1,
-            'limit' => $queryParamsRaw['limit'] ?? 10,
-            'type' => $queryParamsRaw['type'] ?? null,
+            'category' => $queryParamsRaw['category'] ?? null,
+            'subcategory' => $queryParamsRaw['subcategory'] ?? null,
             'manufacturer' => $queryParamsRaw['manufacturer'] ?? null,
-            'country' => $queryParamsRaw['country'] ?? null,
             'price_min' => $queryParamsRaw['price_min'] ?? null,
             'price_max' => $queryParamsRaw['price_max'] ?? null,
             'available' => $queryParamsRaw['available'] ?? null,
-            'sort' => $queryParamsRaw['sort'] ?? 'id',
+            'discount' => $queryParamsRaw['discount'] ?? null,
+            'new' => $queryParamsRaw['new'] ?? null,
+            'sort' => $queryParamsRaw['sort'] ?? 'product_id',
             'order' => $queryParamsRaw['order'] ?? 'ASC',
             'search' => $queryParamsRaw['search'] ?? null
         ];
+    }
 
-        $filters['limit'] = max(1, min(100, (int)$filters['limit']));
-        $filters['page'] = max(1, (int)$filters['page']);
-        $validSortColumns = ['id', 'price', 'name'];
-        $filters['sort'] = in_array($filters['sort'], $validSortColumns) ? $filters['sort'] : 'id';
-        $filters['order'] = strtoupper($filters['order']) === 'DESC' ? 'DESC' : 'ASC';
-        if (isset($filters['available'])) {
-            $filters['available'] = $filters['available'] === 'true' ? 'true' : null;
+    private static function validatePagination(array &$queryParams) {
+        $queryParams['page'] = max(1, (int)$queryParams['page']);
+    }
+
+    private static function validateSorting(array &$queryParams) {
+        $sortMap = [
+            "price" => "price",
+            "newness" => "created_at"
+        ];
+        $validSortTargets = ['price', 'newness'];
+        $sortTarget = $queryParams['sort'];
+        $queryParams['sort'] = in_array($sortTarget, $validSortTargets) ? $sortMap[$sortTarget] : 'product_id';
+        $queryParams['order'] = strtoupper($queryParams['order']) === 'DESC' ? 'DESC' : 'ASC';
+    }
+
+    private static function validateOtherParameters(array &$queryParams) {
+        if (isset($queryParams['available'])) {
+            $queryParams['available'] = $queryParams['available'] === 'true' ? 'true' : null;
         }
-        if (isset($filters['country'])) {
-            $filters['country'] = strtoupper($filters['country']);
+        if (isset($queryParams['discount'])) {
+            $queryParams['discount'] = $queryParams['discount'] === 'true' ? 'true' : null;
         }
-        return $filters;
+        if (isset($queryParams['new'])) {
+            $queryParams['new'] = $queryParams['new'] === 'true' ? 'true' : null;
+        }
     }
 }
 

@@ -11,22 +11,23 @@ class Database {
 
     private function __construct()
     {
-        $env = parse_ini_file('/home/b/b93332pg/techmarket/.env');
-        $hostname = $env['DB_HOST'];
-        $dbname = $env['DB_NAME'];
+        // $env = parse_ini_file('/home/b/b93332pg/techmarket/.env');
+        // $hostname = $env['DB_HOST'];
+        // $dbname = $env['DB_NAME'];
+        // $port = "3306";
+        // $username = $env['DB_NAME'];
+        // $password = $env['DB_PASSWORD'];
+
+        $hostname = 'lamp-mysql8';
+        $dbname = 'php-mysql';
         $port = "3306";
-        $username = $env['DB_NAME'];
-        $password = $env['DB_PASSWORD'];
+        $username = 'dev';
+        $password = '123';
 
         $dsn = "mysql:host={$hostname};port={$port};dbname={$dbname}";
-        try {
-            $this->connection = new PDO($dsn, $username, $password);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }
-        catch (PDOException $e) {
-            die('Connection failed: ' . $e->getMessage());
-        }
+        $this->connection = new PDO($dsn, $username, $password);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
 
     public static function getInstance() {
