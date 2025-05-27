@@ -3,3 +3,5 @@
 .env.local
 /public/img/
 www.zip
+/uploads
+index.html

@@ -60,7 +60,7 @@ class AuthService {
             return;
         }
         $token = bin2hex(random_bytes(32));
-        $expires_at = (new DateTime('+5 min'))->format("Y-m-d H:i:s");
+        $expires_at = (new DateTime('+10 min'))->format("Y-m-d H:i:s");
         TokenModel::addUserResetToken($email, $token, $expires_at);
         self::sendResetMail($email, $token);
     }
@@ -95,7 +95,7 @@ class AuthService {
         $tokenEntry = TokenModel::getTokenEntry($receivedToken);
         $currentTime = new DateTime();
         $tokenExpiryTime = new DateTime($tokenEntry['expires_at']);
-        if ($tokenEntry['token'] === $receivedToken && $tokenExpiryTime > $currentTime) {
+        if (isset($tokenEntry) && $tokenEntry['token'] === $receivedToken && $tokenExpiryTime > $currentTime) {
             return $tokenEntry;
         }
         return null;

@@ -28,5 +28,14 @@ class Middleware {
         session_start();
         return $handler->handle($request);
     }
+
+    public static function checkAdminPermission($request, $handler) {
+        if ($_SESSION['user']['role'] === 'admin') {
+            return $handler->handle($request);
+        }
+        $response = new \Slim\Psr7\Response();
+        $response->getBody()->write(json_encode(["error" => 'Permission denied']));
+        return $response->withStatus(403)->withHeader("Content-Type", "application/json");
+    }
 }
 

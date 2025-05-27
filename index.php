@@ -5,7 +5,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
-use App\Controllers\UserController;
 use App\Controllers\AuthController;
 use App\Controllers\ProductController;
 use App\Middleware\Middleware;
@@ -28,9 +27,21 @@ $app->group("/api", function (RouteCollectorProxy $group) {
         $group->post("/password-reset", [AuthController::class, 'handlePasswordResetRequest']);
     });
 
-    $group->get('/products', [ProductController::class, 'getProducts'])->add([Middleware::class, 'verifySession']);
+    $group->group('/products', function (RouteCollectorProxy $group) {
+        $group->get('', [ProductController::class, 'getProducts']); // to do permissions
+        $group->post('', [ProductController::class, 'addProduct']); // to do permissions
 
-    $group->any('/{routes:.+}', function (Request $request, Response $response) {
+        $group->group('/categories', function (RouteCollectorProxy $group) {
+            $group->get('', [ProductController::class, 'getProductCategories']); // to do permissions
+            $group->get('/{category_id}/subcategories', [ProductController::class, 'getProductSubcategoryByCategory']); // to do permissions
+            $group->get('/tree', [ProductController::class, 'getCategoryTree']);
+        });
+
+        $group->get('/manufacturers', [ProductController::class, 'getProductManufacturers']); // to do permissions
+    });
+
+
+    $group->any('[/{routes:.+}]', function (Request $request, Response $response) {
         $response->getBody()->write(json_encode(['error' => 'Not Found']));
         return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
     });

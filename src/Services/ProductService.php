@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ProductModel;
+use App\Utils\Utils;
 
 class ProductService {
     public static function getProducts($queryParams) {
@@ -61,6 +62,37 @@ class ProductService {
         if (isset($queryParams['new'])) {
             $queryParams['new'] = $queryParams['new'] === 'true' ? 'true' : null;
         }
+    }
+
+    public static function addProduct($productData, $uploadedFiles) {
+        $image = $uploadedFiles["image"];
+        $imagePath = Utils::moveImage($image, "/home/b/b93332pg/techmarket/public_html/uploads/products/original/");
+        $compressedPath = Utils::compressAndSaveImage($imagePath, "/home/b/b93332pg/techmarket/public_html/uploads/products/thumbnails", 350, 350, 90);
+        Utils::addWatermark($imagePath, '/home/b/b93332pg/techmarket/public_html/watermark/watermark.png');
+    }
+
+    private static function validateProductData($productData, $uploadedFiles) {
+
+    }
+
+    public static function getProductCategories() {
+        $productCategories = ProductModel::getProductCategories();
+        return $productCategories;
+    }
+
+    public static function getProductManufacturers() {
+        $manufacturers = ProductModel::getProductManufacturers();
+        return $manufacturers;
+    }
+
+    public static function getProductSubcategoryByCategory($categoryId) {
+        $productSubcategories = ProductModel::getProductSubcategoryByCategoryId($categoryId);
+        return $productSubcategories;
+    }
+
+    public static function getCategoryTree() {
+        $categoryTree = ProductModel::getCategoryTree();
+        return $categoryTree;
     }
 }
 
