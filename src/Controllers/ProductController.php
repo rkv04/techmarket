@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Exceptions\ValidationException;
 use App\Services\ProductService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -63,8 +64,16 @@ class ProductController {
     public static function addProduct(Request $request, Response $response) {
         $productData = $request->getParsedBody();
         $uploadedFiles = $request->getUploadedFiles();
-        ProductService::addProduct($productData, $uploadedFiles);
-        return self::jsonResponse($response, ['message' => 'OK'], 200);
+        try {
+            ProductService::addProduct($productData, $uploadedFiles);
+            return self::jsonResponse($response, ['message' => 'ADDED_SUCCESS'], 200);
+        }
+        catch (ValidationException $e) {
+            return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
+        }
+        catch (Throwable $e) {
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
+        }
     }
 
     private static function jsonResponse(Response $response, $data, $status) {

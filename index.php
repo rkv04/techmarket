@@ -34,7 +34,7 @@ $app->group("/api", function (RouteCollectorProxy $group) {
         $group->group('/categories', function (RouteCollectorProxy $group) {
             $group->get('', [ProductController::class, 'getProductCategories']); // to do permissions
             $group->get('/{category_id}/subcategories', [ProductController::class, 'getProductSubcategoryByCategory']); // to do permissions
-            $group->get('/tree', [ProductController::class, 'getCategoryTree']);
+            $group->get('/tree', [ProductController::class, 'getCategoryTree']); // to do permissions
         });
 
         $group->get('/manufacturers', [ProductController::class, 'getProductManufacturers']); // to do permissions

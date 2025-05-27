@@ -100,6 +100,10 @@ class ProductModel {
         $products = [];
         foreach ($productsRaw as $product) {
             $productImages = self::getProductImagesById($product['product_id']);
+            foreach ($productImages as &$productImage) {
+                $productImage['image_path'] = "/uploads/" . $productImage['image_path']; // path
+                $productImage['thumbnail_path'] = "/uploads/" . $productImage['thumbnail_path']; // path
+            }
             $products[] = [
                 "id" => $product['product_id'],
                 "name" => $product['product_name'],
@@ -141,7 +145,47 @@ class ProductModel {
     }
 
     public static function addProduct($product) {
+        $db = Database::getInstance()->getConnection();
+        $query = "INSERT INTO Product (
+                        name, 
+                        short_description, 
+                        full_description, 
+                        subcategory_id, 
+                        price, 
+                        old_price, 
+                        is_discount, 
+                        quantity, 
+                        manufacturer_id) 
+                    VALUES (
+                        :name, 
+                        :shortDescription, 
+                        :fullDescription, 
+                        :subcategoryId, 
+                        :price, 
+                        :oldPrice, 
+                        :isDiscount, 
+                        :quantity, 
+                        :manufacturerId
+                    );";
+                    
         
+        $stmt = $db->prepare($query);
+        $stmt->execute([
+            ':name' => $product['name'],
+            ':shortDescription' => $product['shortDescription'],
+            ':fullDescription' => $product['fullDescription'],
+            ':subcategoryId' => $product['subcategoryId'],
+            ':price' => $product['price'],
+            ':oldPrice' => $product['oldPrice'],
+            ':isDiscount' => $product['isDiscount'],
+            ':quantity' => $product['quantity'],
+            ':manufacturerId' => $product['manufacturerId']
+        ]);
+
+        $productId = $db->lastInsertId();
+        $query = "INSERT INTO Product_image (product_id, image_path, thumbnail_path) VALUES (?, ?, ?);";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$productId, $product['imageFilename'], $product['thumbnailFilename']]);
     }
 
     public static function getProductCategories() {
@@ -177,6 +221,26 @@ class ProductModel {
             ];
         }
         return $categoryTree;
+    }
+
+    public static function getSubcategoryById($subcategoryId) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT id, name FROM Product_subcategory WHERE id = ?");
+        $stmt->execute([$subcategoryId]);
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch();
+        }
+        return null;
+    }
+
+    public static function getManufacturerById($manufacturerId) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT id, name FROM Manufacturer WHERE id = ?");
+        $stmt->execute([$manufacturerId]);
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch();
+        }
+        return null;
     }
 
 }

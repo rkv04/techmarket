@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Exceptions\ValidationException;
 use App\Models\ProductModel;
 use App\Utils\Utils;
 
 class ProductService {
+
+    private const BASE_DIR = "/home/b/b93332pg/techmarket/public_html/"; // path
+
     public static function getProducts($queryParams) {
         $preparedQueryParams = self::prepareQueryParams($queryParams);
         $products = ProductModel::getProducts($preparedQueryParams);
@@ -65,14 +69,41 @@ class ProductService {
     }
 
     public static function addProduct($productData, $uploadedFiles) {
+        self::validateProductData($productData, $uploadedFiles);
         $image = $uploadedFiles["image"];
-        $imagePath = Utils::moveImage($image, "/home/b/b93332pg/techmarket/public_html/uploads/products/original/");
-        $compressedPath = Utils::compressAndSaveImage($imagePath, "/home/b/b93332pg/techmarket/public_html/uploads/products/thumbnails", 350, 350, 90);
-        Utils::addWatermark($imagePath, '/home/b/b93332pg/techmarket/public_html/watermark/watermark.png');
+        $originalImageInfo = Utils::moveImage($image, self::BASE_DIR . "uploads/"); // path
+        $thumbnailImageInfo = Utils::compressAndSaveImage($originalImageInfo['path'], self::BASE_DIR . "uploads/", 200, 200, 90); // path
+        Utils::addWatermark($originalImageInfo['path'], self::BASE_DIR . 'watermarks/watermark.png'); // path
+        $productData['imageFilename'] = $originalImageInfo['filename'];
+        $productData['thumbnailFilename'] = $thumbnailImageInfo['filename'];
+        ProductModel::addProduct($productData);
     }
 
-    private static function validateProductData($productData, $uploadedFiles) {
+    private static function validateProductData(array &$productData, $uploadedFiles) {
+        if (!isset($uploadedFiles['image']) || $uploadedFiles['image']->getError() !== UPLOAD_ERR_OK) {
+            throw new ValidationException("VALIDATEION_IMAGE_REQUIRED");
+        }
+        $productData = array_merge([
+            'name' => null,
+            'shortDescription' => null,
+            'fullDescription' => null,
+            'subcategoryId' => null,
+            'price' => null,
+            'oldPrice' => null,
+            'isDiscount' => 0,
+            'quantity' => null,
+            'manufacturerId' => null
+        ], $productData);
 
+        $requiredFields = ['name', 'shortDescription', 'fullDescription', 'subcategoryId', 'price', 'quantity', 'manufacturerId'];
+        foreach ($requiredFields as $field) {
+            if (empty($productData[$field])) {
+                throw new ValidationException("VALIDATION_REQUIRED_FIELDS");
+            }
+        }
+        if (!ProductModel::getManufacturerById($productData['manufacturerId']) || !ProductModel::getSubcategoryById($productData['subcategoryId'])) {
+            throw new ValidationException("INVALID_ID");
+        }
     }
 
     public static function getProductCategories() {

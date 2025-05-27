@@ -30,7 +30,7 @@ class Utils {
         $extension = pathinfo($srcImagePath, PATHINFO_EXTENSION);
         $basename = bin2hex(random_bytes(8));
         $timestamp = time();
-        $filename = sprintf('%s_%s.%s', $basename, $timestamp, $extension);
+        $filename = sprintf('%s%s.%s', $basename, $timestamp, $extension);
         $outputPath = $destDir . $filename;
         match ($type) {
             IMAGETYPE_JPEG => imagejpeg($newImage, $outputPath, $quality),
@@ -38,7 +38,8 @@ class Utils {
         };
         imagedestroy($newImage);
         imagedestroy($srcImage);
-        return $outputPath;
+
+        return ["filename" => $filename, "path" => $outputPath];
     }
 
     public static function addWatermark($srcImagePath, $watermarkPath) {
@@ -48,11 +49,19 @@ class Utils {
             IMAGETYPE_PNG => imagecreatefrompng($srcImagePath)
         };
         $watermark = imagecreatefrompng($watermarkPath);
-        $wmkWidth = imagesx($watermark);
-        $wmkHeight = imagesy($watermark);
         imagealphablending($watermark, false);
         imagesavealpha($watermark, true);
-        imagecopymerge($srcImage, $watermark, 0, 0, 0, 0, $wmkWidth, $wmkHeight, 50);
+        $sourceWidth = imagesx($srcImage);
+        $sourceHeight = imagesy($srcImage);
+        $watermarkWidth = imagesx($watermark);
+        $watermarkHeight = imagesy($watermark);
+        $stepX = $watermarkWidth;
+        $stepY = $watermarkHeight;
+        for ($x = 0; $x < $sourceWidth; $x += $stepX) {
+            for ($y = 0; $y < $sourceHeight; $y += $stepY) {
+                imagecopy($srcImage, $watermark, $x, $y, 0, 0, $watermarkWidth, $watermarkHeight);
+            }
+        }
         match ($type) {
             IMAGETYPE_JPEG => imagejpeg($srcImage, $srcImagePath, 90),
             IMAGETYPE_PNG => imagepng($srcImage, $srcImagePath)
@@ -65,10 +74,10 @@ class Utils {
         $extension = pathinfo($image->getClientFileName(), PATHINFO_EXTENSION);
         $basename = bin2hex(random_bytes(8));
         $timestamp = time();
-        $filename = sprintf('%s_%s.%s', $basename, $timestamp, $extension);
+        $filename = sprintf('%s%s.%s', $basename, $timestamp, $extension);
         $imagePath = $destDir . $filename;
         $image->moveTo($imagePath);
-        return $imagePath;
+        return ["filename" => $filename, "path" => $imagePath];
     }
 }
 
