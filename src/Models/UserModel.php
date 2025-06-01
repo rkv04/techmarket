@@ -21,6 +21,16 @@ class UserModel {
         }
         return $stmt->fetch();
     }
+
+    public static function getUserById($userId) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT name, email, birth_date AS birthDate FROM User WHERE id = ?");
+        $stmt->execute([$userId]);
+        if ($stmt->rowCount() === 0) {
+            return null;
+        }
+        return $stmt->fetch();
+    }
     
     public static function addUser($user) {
         $db = Database::getInstance()->getConnection();
@@ -32,6 +42,18 @@ class UserModel {
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare("UPDATE User SET password = ? WHERE email = ?");
         $stmt->execute([$passwordHash, $email]);
+    }
+
+    public static function updatePasswordById($userId, $passwordHash) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("UPDATE User SET password = ? WHERE id = ?");
+        $stmt->execute([$passwordHash, $userId]);
+    }
+
+    public static function updateUser($user) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("UPDATE User SET name = ?, email = ?, birth_date = ? WHERE id = ?");
+        $stmt->execute([$user['name'], $user['email'], $user['birthDate'], $user['id']]);
     }
 }
 

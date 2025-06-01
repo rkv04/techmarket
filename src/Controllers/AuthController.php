@@ -88,6 +88,20 @@ class AuthController {
         }
     }
 
+    public static function changePassword(Request $request, Response $response) {
+        $bodyData = $request->getParsedBody();
+        try {
+            AuthService::changeUserPassword($bodyData);
+            return self::jsonResponse($response, ['message' => 'PASSWORD_CHANGED'], 200);
+        }
+        catch (ValidationException $e) {
+            return self::jsonResponse($response, ['error' => $e->getMessage()], 400);
+        }
+        catch (Throwable $e) {
+            return self::jsonResponse($response, ['error' => 'SERVER_ERROR'], 500);
+        }
+    }
+
     private static function jsonResponse(Response $response, $data, $status) {
         $response->getBody()->write(json_encode($data));
         return $response->withHeader("Content-Type", "application/json")->withStatus($status);
