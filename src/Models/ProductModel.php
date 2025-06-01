@@ -167,8 +167,6 @@ class ProductModel {
                         :quantity, 
                         :manufacturerId
                     );";
-                    
-        
         $stmt = $db->prepare($query);
         $stmt->execute([
             ':name' => $product['name'],
@@ -182,10 +180,12 @@ class ProductModel {
             ':manufacturerId' => $product['manufacturerId']
         ]);
 
-        $productId = $db->lastInsertId();
-        $query = "INSERT INTO Product_image (product_id, image_path, thumbnail_path) VALUES (?, ?, ?);";
-        $stmt = $db->prepare($query);
-        $stmt->execute([$productId, $product['imageFilename'], $product['thumbnailFilename']]);
+        if (isset($product['imageFilename']) && isset($product['thumbnailFilename'])) {
+            $productId = $db->lastInsertId();
+            $query = "INSERT INTO Product_image (product_id, image_path, thumbnail_path) VALUES (?, ?, ?);";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$productId, $product['imageFilename'], $product['thumbnailFilename']]);
+        }
     }
 
     public static function getProductCategories() {
@@ -242,6 +242,5 @@ class ProductModel {
         }
         return null;
     }
-
 }
 

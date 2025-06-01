@@ -9,6 +9,7 @@ use App\Controllers\AuthController;
 use App\Controllers\MenuController;
 use App\Controllers\ProductController;
 use App\Middleware\Middleware;
+use App\Models\ProductModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -37,6 +38,7 @@ $app->group("/api", function (RouteCollectorProxy $group) {
             $group->get('/tree', [ProductController::class, 'getCategoryTree']); // to do permissions
         });
         $group->get('/manufacturers', [ProductController::class, 'getProductManufacturers']); // to do permissions
+        $group->post('/import', [ProductController::class, 'importProductsFromXML']);
     });
 
     $group->group('/user', function (RouteCollectorProxy $group) {

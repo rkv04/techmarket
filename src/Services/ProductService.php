@@ -125,5 +125,28 @@ class ProductService {
         $categoryTree = ProductModel::getCategoryTree();
         return $categoryTree;
     }
+
+    public static function importProductsFromXML($uploadedFiles) {
+        if (!isset($uploadedFiles['xml']) || $uploadedFiles['xml']->getError() !== UPLOAD_ERR_OK) {
+            throw new ValidationException("VALIDATION_XML_REQUIRED");
+        }
+        $xmlFile = $uploadedFiles['xml'];
+        $xmlString = $xmlFile->getStream()->getContents();
+        $productsDataXML = simplexml_load_string($xmlString);
+        foreach ($productsDataXML->product as $xmlProduct) {
+            $productData = [
+                'name' => (string)$xmlProduct->name,
+                'shortDescription' => (string)$xmlProduct->short_description,
+                'fullDescription' => (string)$xmlProduct->full_description,
+                'subcategoryId' => (int)$xmlProduct->subcategory_id,
+                'price' => (float)$xmlProduct->price,
+                'oldPrice' => isset($xmlProduct->old_price) ? (float)$xmlProduct->old_price : null,
+                'isDiscount' => isset($xmlProduct->is_discount) ? (int)$xmlProduct->is_discount : 0,
+                'quantity' => (int)$xmlProduct->quantity,
+                'manufacturerId' => (int)$xmlProduct->manufacturer_id
+            ];
+            ProductModel::addProduct($productData);
+        }
+    }
 }
 
