@@ -25,20 +25,20 @@ class ProductService {
     }
 
     private static function processUnsetValues(array &$queryParamsRaw) {
-        return [
-            'page' => $queryParamsRaw['page'] ?? 1,
-            'category' => $queryParamsRaw['category'] ?? null,
-            'subcategory' => $queryParamsRaw['subcategory'] ?? null,
-            'manufacturer' => $queryParamsRaw['manufacturer'] ?? null,
-            'price_min' => $queryParamsRaw['price_min'] ?? null,
-            'price_max' => $queryParamsRaw['price_max'] ?? null,
-            'available' => $queryParamsRaw['available'] ?? null,
-            'discount' => $queryParamsRaw['discount'] ?? null,
-            'new' => $queryParamsRaw['new'] ?? null,
-            'sort' => $queryParamsRaw['sort'] ?? 'product_id',
-            'order' => $queryParamsRaw['order'] ?? 'ASC',
-            'search' => $queryParamsRaw['search'] ?? null
-        ];
+        return array_merge([
+            'page' => 1,
+            'category' => null,
+            'subcategory' => null,
+            'manufacturer' => null,
+            'price_min' => null,
+            'price_max' => null,
+            'available' => null,
+            'discount' => null,
+            'new' => null,
+            'sort' => 'product_id',
+            'order' => 'ASC',
+            'search' => null
+        ], $queryParamsRaw);
     }
 
     private static function validatePagination(array &$queryParams) {
@@ -81,7 +81,7 @@ class ProductService {
 
     private static function validateProductData(array &$productData, $uploadedFiles) {
         if (!isset($uploadedFiles['image']) || $uploadedFiles['image']->getError() !== UPLOAD_ERR_OK) {
-            throw new ValidationException("VALIDATEION_IMAGE_REQUIRED");
+            throw new ValidationException("VALIDATION_IMAGE_REQUIRED");
         }
         $productData = array_merge([
             'name' => null,

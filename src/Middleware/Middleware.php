@@ -5,7 +5,7 @@ namespace App\Middleware;
 
 class Middleware {
     public static function verifySession($request, $handler) {
-        if (isset($_SESSION['lastActivity']) && (time() - $_SESSION["lastActivity"]) < 5 * 60) {
+        if (isset($_SESSION['lastActivity']) && (time() - $_SESSION["lastActivity"]) < 10 * 60) {
             $_SESSION['lastActivity'] = time();
             return $handler->handle($request);
         }
