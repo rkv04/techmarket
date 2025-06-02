@@ -1,6 +1,6 @@
 .mainBlock {
     width: 66%;
-    max-height: 100% !important;
+    height: 100%s;
     background-color: white;
     border: 2px solid #6EB2FF;
     border-radius: 20px;
@@ -10,12 +10,24 @@
     flex-wrap: wrap;
     gap: 20px;
     align-content: flex-start;
+    box-sizing: border-box;
 }
 
-.sideBar{
+.sideBar {
     width: 30%;
     height: 100%;
     background-color: white;
     border: 2px solid #6EB2FF;
     border-radius: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .sideBar{
+        display: none;
+    }
+    .mainBlock{
+        width: 100%;
+    }
 }

@@ -24,6 +24,8 @@ const Home = () => {
                 <TestCart />
                 <TestCart />
                 <TestCart />
+                <TestCart />
+                <TestCart />
             </div>
             <div className="sideBar">
             </div>

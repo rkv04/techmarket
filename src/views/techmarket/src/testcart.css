@@ -1,20 +1,36 @@
 .TestCart {
     display: flex;
     flex-direction: column;
-    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--background-blue);
+    border-radius: 10px;
     height: 300px;
-    width: calc(33.33% - 14px);
+    width: calc(33.33% - 14px); /* 3 колонки по умолчанию */
     box-sizing: border-box;
-    padding: 10px;
+    margin-bottom: 20px;
 }
 
-@media (max-width: 1200px) {
+.TestCart > * {
+    margin-bottom: 10px;
+}
+
+/* Большие экраны - 4 колонки */
+@media (min-width: 1600px) {
+    .TestCart {
+        width: calc(25% - 15px); /* 4 колонки с отступами */
+    }
+}
+
+/* Планшеты - 2 колонки */
+@media (max-width: 1199px) {
     .TestCart {
         width: calc(50% - 10px);
     }
 }
 
-@media (max-width: 768px) {
+/* Мобильные - 1 колонка */
+@media (max-width: 767px) {
     .TestCart {
         width: 100%;
     }
