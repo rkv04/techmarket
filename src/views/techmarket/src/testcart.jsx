@@ -21,6 +21,9 @@ const TestCart = () => {
                     <h1>Чайник</h1>
                     <img src={chainikPNG} alt="Чайник" width={180} />
                     <button>Подробнее</button>
+                    <div className="hover-text">
+                        Чайник прикольный и классный так то клевый!
+                    </div>
                 </div>
             </div>
             <div 

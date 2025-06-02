@@ -1,7 +1,7 @@
 .TestCart {
     border: 2px solid var(--background-blue);
     border-radius: 10px;
-    height: 300px;
+    height: 340px;
     width: calc(33.33% - 14px);
     box-sizing: border-box;
     margin-bottom: 20px;
@@ -111,6 +111,38 @@
 
 li, p{
     font-size: 20px;
+}
+
+.TestCart .hover-text {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+    color: var(--text-blue);
+    font-size: 14px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.TestCart:hover .hover-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.TestCart #notOpen {
+    transition: transform 0.3s ease;
+}
+
+.TestCart:hover #notOpen {
+    transform: translateY(-15px);
+}
+
+.TestCart:hover #notOpen > button{
+    transform: translate(0px, 40px);
 }
 
 @media (min-width: 1600px) {
