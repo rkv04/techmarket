@@ -60,15 +60,14 @@ class AuthService {
             return;
         }
         $token = bin2hex(random_bytes(32));
-        $expires_at = (new DateTime('+5 min'))->format("Y-m-d H:i:s");
+        $expires_at = (new DateTime('+10 min'))->format("Y-m-d H:i:s");
         TokenModel::addUserResetToken($email, $token, $expires_at);
         self::sendResetMail($email, $token);
     }
 
     private static function sendResetMail($email, $token) {
-        $resetLink = "http://b93332pg.beget.tech/password-reset?token=$token";
         $subject = "TechMarket password reset";
-        $message = "To reset your password, follow the link: $resetLink";
+        $message = "Your reset token: $token";
         $headers = "From: no-reply@b93332pg.beget.tech" . "\r\n";
         mail($email, $subject, $message, $headers);
     }
@@ -91,11 +90,28 @@ class AuthService {
         UserModel::updatePasswordByEmail($tokenEntry['email'], $passwordHash);
     }
 
+    public static function changeUserPassword($bodyData) {
+        $password = $bodyData['password'] ?? null;
+        $passwordRepeated = $bodyData['passwordRepeated'] ?? null;
+        if (empty($password) || empty($passwordRepeated)) {
+            throw new ValidationException("VALIDATION_REQUIRED_FIELDS");
+        }
+        if (!self::validatePassword($password)) {
+            throw new ValidationException('VALIDATION_WEAK_PASSWORD');
+        }
+        if ($password !== $passwordRepeated) {
+            throw new ValidationException('VALIDATION_PASSWORD_MISMATCH');
+        }
+        $userId = $_SESSION['user']['id'];
+        $passwordHash = Utils::getBcryptHash($password);
+        UserModel::updatePasswordById($userId, $passwordHash);
+    }
+
     private static function verifyResetToken($receivedToken) {
         $tokenEntry = TokenModel::getTokenEntry($receivedToken);
         $currentTime = new DateTime();
         $tokenExpiryTime = new DateTime($tokenEntry['expires_at']);
-        if ($tokenEntry['token'] === $receivedToken && $tokenExpiryTime > $currentTime) {
+        if (isset($tokenEntry) && $tokenEntry['token'] === $receivedToken && $tokenExpiryTime > $currentTime) {
             return $tokenEntry;
         }
         return null;
