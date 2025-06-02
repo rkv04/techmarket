@@ -1,0 +1,21 @@
+.TestCart {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 300px;
+    width: calc(33.33% - 14px);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+@media (max-width: 1200px) {
+    .TestCart {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .TestCart {
+        width: 100%;
+    }
+}

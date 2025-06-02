@@ -59,6 +59,7 @@
 .Header2 a:hover{
   background-color: #c6e1ff;
   transform: scale(1.1);
+  border-left: 1px solid var(--background-blue);
 }
 
 .Navs{
