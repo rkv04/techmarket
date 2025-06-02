@@ -1,7 +1,7 @@
 .Layout {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
     align-items: center;
 }
@@ -10,12 +10,15 @@
     display: flex;
     flex: 1;
     width: calc(100% - 2rem);
-    height: 84vh;
+    height: 100%;
+    min-height: 0;
     padding: 1rem;
     box-sizing: border-box;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 500px;
 }
 
 .Header,
@@ -23,12 +26,15 @@
     background-color: var(--background-blue);
     color: white;
     position: sticky;
+    top: 0;
     bottom: 0;
     padding: 10px;
     width: 100%;
     text-align: center;
     box-sizing: border-box;
     font-size: var(--font-sizing-for-headers);
+    flex-shrink: 0;
+    z-index: 1;
 }
 
 .Footer{

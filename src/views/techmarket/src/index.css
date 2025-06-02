@@ -6,8 +6,11 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-body{
+html, body{
+  height: 100%;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 h1{
