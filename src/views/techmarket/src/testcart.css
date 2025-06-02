@@ -1,37 +1,137 @@
 .TestCart {
+    border: 2px solid var(--background-blue);
+    border-radius: 10px;
+    height: 300px;
+    width: calc(33.33% - 14px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.TestCart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.TestCart-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.TestCart-expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 80%;
+    max-width: 800px;
+    height: auto;
+    min-height: 500px;
+    max-height: 90vh;
+    z-index: 11;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.TestCart-expanded.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#notOpen > *, #isOpen > * {
+    margin-bottom: 10px;
+}
+
+#notOpen > h1, #isOpen > h1 {
+    font-size: var(--font-sizing-for-headers3);
+    color: var(--text-blue);
+}
+
+.TestCart:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px 5px var(--background-blue);
+}
+
+.TestCart > div > button,
+#isOpen > button {
+    width: 80%;
+    border: 2px solid var(--text-blue);
+    border-radius: 5px;
+    background-color: var(--background-blue);
+    color: white;
+    font-size: 20px;
+    transition: all 0.1s ease-in-out;
+}
+
+.TestCart > div > button:hover,
+#isOpen > button:hover {
+    transform: scale(1.1);
+    background-color: var(--text-blue);
+}
+
+#notOpen {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 2px solid var(--background-blue);
-    border-radius: 10px;
-    height: 300px;
-    width: calc(33.33% - 14px); /* 3 колонки по умолчанию */
-    box-sizing: border-box;
+    height: 100%;
+}
+
+#isOpen {
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: 3px solid var(--background-blue);
+    color: var(--text-blue);
+}
+
+#isOpen > h1, h3{
+    font-size: var(--font-sizing-for-headers3);
     margin-bottom: 20px;
 }
 
-.TestCart > * {
-    margin-bottom: 10px;
+li, p{
+    font-size: 20px;
 }
 
-/* Большие экраны - 4 колонки */
 @media (min-width: 1600px) {
     .TestCart {
-        width: calc(25% - 15px); /* 4 колонки с отступами */
+        width: calc(25% - 15px);
     }
 }
 
-/* Планшеты - 2 колонки */
 @media (max-width: 1199px) {
     .TestCart {
         width: calc(50% - 10px);
     }
 }
 
-/* Мобильные - 1 колонка */
 @media (max-width: 767px) {
     .TestCart {
         width: 100%;
+    }
+    
+    .TestCart-expanded {
+        width: 95%;
+        min-height: 70vh;
     }
 }

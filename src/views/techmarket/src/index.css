@@ -3,6 +3,7 @@
     --text-blue: #0077FF;
     --font-sizing-for-headers: 18px;
     --font-sizing-for-headers2: 25px;
+    --font-sizing-for-headers3: 25px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -11,6 +12,11 @@ html, body{
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+
+button{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 15px;
 }
 
 h1{
