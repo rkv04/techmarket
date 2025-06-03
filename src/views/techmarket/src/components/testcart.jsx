@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './testcart.css';
-import chainikPNG from './assets/chainik.png';
+import chainikPNG from '../assets/chainik.png';
 
 const TestCart = () => {
     const [isExpanded, setIsExpanded] = useState(false);

@@ -1,13 +1,12 @@
 import './App.css'
-import './Home.jsx'
-import Layout from './Layout'
-import BackgroundGrid from './BackgroundGrid.jsx';
-import Home from './Home.jsx';
+import './pages/Home.jsx'
+import Layout from './pages/Layout.jsx'
+import BackgroundGrid from './components/BackgroundGrid.jsx';
+import Home from './pages/Home.jsx';
 
 function App() {
   return (
     <>
-    {/* <BackgroundGrid /> */}
       <Layout>
         <Home />
       </Layout>

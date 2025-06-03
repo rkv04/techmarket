@@ -1,6 +1,6 @@
 import React from "react";
 import './Home.css';
-import TestCart from "./testcart";
+import TestCart from "../components/testcart";
 
 const Home = () => {
     return(

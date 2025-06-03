@@ -1,9 +1,9 @@
 import './Layout.css'
-import searchLogo from './assets/searchlogo.png';
-import userLogo from './assets/cartlogo.png';
-import cartLogo from './assets/userlogo.png';
-import VKLogo from './assets/vklogo.png';
-import instagrammLogo from './assets/instagrammlogo.png';
+import searchLogo from '../assets/searchlogo.png';
+import userLogo from '../assets/cartlogo.png';
+import cartLogo from '../assets/userlogo.png';
+import VKLogo from '../assets/vklogo.png';
+import instagrammLogo from '../assets/instagrammlogo.png';
 
 const Header = () => {
     return (
