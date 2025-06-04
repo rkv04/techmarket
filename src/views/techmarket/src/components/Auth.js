@@ -4,7 +4,7 @@ const API_URL = "http://b93332pg.beget.tech/api";
 
 export const Login = async (email, password) => {
     try{
-        const response = await axios.post('/api/auth/login', 
+        const response = await axios.post('http://b93332pg.beget.tech//api/auth/login', 
         {
             email,
             password
