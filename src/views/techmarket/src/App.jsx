@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginForm from './pages/Auth.jsx';
 import RegisterForm from './pages/Register.jsx';
+import ForgotPasswordForm from './pages/forgotPassword.jsx';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route path="/password-forgot" element={<ForgotPasswordForm />} />
         <Route
           path="/products"
           element={

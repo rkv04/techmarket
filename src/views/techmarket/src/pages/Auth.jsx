@@ -12,8 +12,6 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-
-        // Валидация полей
         if (!email || !password) {
             setError('Все поля обязательны для заполнения');
             return;
@@ -50,7 +48,7 @@ const LoginForm = () => {
     const handleRegisterClick = () => {
         navigate('/register');
     };
-
+    
     return(
         <div className="login-container">
             <h2>Вход в систему</h2>
@@ -62,8 +60,7 @@ const LoginForm = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                        required/>
                 </div>
                 <div className="form-group">
                     <label>Пароль:</label>
@@ -71,16 +68,19 @@ const LoginForm = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                        required/>
                 </div>
-                <button>Забыли пароль?</button>
+                <div className="forgot-password-link">
+                    <a href="/forgot-password" onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/password-forgot');
+                    }}>Забыли пароль?</a>
+                </div>
                 <button type="submit">Войти</button>
                 <button 
                     type="button"
                     onClick={handleRegisterClick}
-                    className="register-btn"
-                >
+                    className="register-btn">
                     Зарегистрироваться
                 </button>
             </form>

@@ -11,7 +11,6 @@ export const Register = async (name, email, password, repeatedPassword) => {
                 password,
                 repeatedPassword
             });
-            console.log(response.status);
             if (response.data.message === 'REGISTER_SUCCESS'){
                 return{
                     success: true,
@@ -21,8 +20,6 @@ export const Register = async (name, email, password, repeatedPassword) => {
     }
     catch(error){
         if (error.response){
-            console.log(error.response.status);
-            console.log(error.response.data.error);
             switch(error.response.status){
                 case 400:
                     if(error.response.data.error === "VALIDATION_REQUIRED_FIELDS"){

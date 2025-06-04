@@ -1,39 +1,27 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API_URL = "http://b93332pg.beget.tech/api";
 
-export const Login = async (email, password) => {
+export const Forgot = async (email) => {
     try{
-        const response = await axios.post(`${API_URL}/auth/login`, 
-        {
-            email,
-            password
-        });
-        if (response.data.message === 'LOGIN_SUCCESS'){
-            return{
-                success: true,
-                data: response.data
-            };
-        }
-        else{
-            return{
-                success: false,
-                error: 'credentials'
+        const response = await axios.post(`${API_URL}/auth/password-forgot`,
+            {
+                email
+            });
+            if (response.data.message == "PASSWORD_RESET_LINK_SENT"){
+                return{
+                    success: true,
+                    data: response.data
+                }
             }
-        }
     }
     catch(error){
         if (error.response){
-            switch (error.response.status){
+            switch(error.response.status){
                 case 400:
                     return{
                         success: false,
                         error: 'validation'
-                    };
-                case 409:
-                    return{
-                        success: false,
-                        error: 'credentials'
                     }
                 case 500:
                     return{

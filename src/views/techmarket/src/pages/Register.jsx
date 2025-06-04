@@ -19,7 +19,6 @@ const RegisterForm = () => {
             navigate('/login');
         }
         else{
-            console.log(result.error);
             switch(result.error){
                 case 'required_fields':
                     setError('Ошибка валидации! Проверьте поля');
@@ -48,7 +47,7 @@ const RegisterForm = () => {
 
     return(
         <div className="login-container">
-            <h2>Вход в систему</h2>
+            <h2>Регистрация</h2>
             {error && <div className="error-message">{ error }</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
