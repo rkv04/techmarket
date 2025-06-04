@@ -6,7 +6,7 @@ use App\Db\Database;
 
 class ProductModel {
 
-    private const LIMIT = 5;
+    private const LIMIT = 10;
 
     public static function getProducts($queryParams) {
         $query = self::buildQuery($queryParams);

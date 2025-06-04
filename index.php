@@ -1,5 +1,18 @@
 <?php
 
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (preg_match('#^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$#', $origin)) {
+    header("Access-Control-Allow-Origin: $origin");
+}
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(204);
+    exit(0);
+}
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Slim\Factory\AppFactory;

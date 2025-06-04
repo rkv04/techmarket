@@ -11,18 +11,12 @@ class Database {
 
     private function __construct()
     {
-        // $env = parse_ini_file('/home/b/b93332pg/techmarket/.env');
-        // $hostname = $env['DB_HOST'];
-        // $dbname = $env['DB_NAME'];
-        // $port = "3306";
-        // $username = $env['DB_NAME'];
-        // $password = $env['DB_PASSWORD'];
-
-        $hostname = 'lamp-mysql8';
-        $dbname = 'php-mysql';
+        $env = parse_ini_file('/home/b/b93332pg/techmarket/.env');
+        $hostname = $env['DB_HOST'];
+        $dbname = $env['DB_NAME'];
         $port = "3306";
-        $username = 'dev';
-        $password = '123';
+        $username = $env['DB_NAME'];
+        $password = $env['DB_PASSWORD'];
 
         $dsn = "mysql:host={$hostname};port={$port};dbname={$dbname}";
         $this->connection = new PDO($dsn, $username, $password);
