@@ -12,11 +12,17 @@ html, body{
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background-image: url('./assets/background.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
-button{
+button,
+input{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 15px;
+  font-size: var(--font-sizing-for-headers3);
+  transition: all 0.1s ease-in-out;
 }
 
 h1{
@@ -27,4 +33,14 @@ a{
   margin: 0;
   display: block;
   text-decoration: none;
+}
+
+input{
+  color: var(--text-blue);
+  outline: none;
+}
+
+input:hover,
+button:hover{
+  transform: scale(1.05);
 }

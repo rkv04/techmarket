@@ -11,6 +11,7 @@
     gap: 20px;
     align-content: flex-start;
     box-sizing: border-box;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.445);
 }
 
 .sideBar {
@@ -21,6 +22,7 @@
     border-radius: 20px;
     overflow-y: auto;
     box-sizing: border-box;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.445);
 }
 
 @media (max-width: 1200px) {

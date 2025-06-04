@@ -1,7 +1,7 @@
 .TestCart {
     border: 2px solid var(--background-blue);
     border-radius: 10px;
-    height: 340px;
+    height: 400px;
     width: calc(33.33% - 14px);
     box-sizing: border-box;
     margin-bottom: 20px;
@@ -9,6 +9,7 @@
     cursor: pointer;
     position: relative;
     z-index: 1;
+    padding: 10px;
 }
 
 .TestCart-overlay {
@@ -142,7 +143,7 @@ li, p{
 }
 
 .TestCart:hover #notOpen > button{
-    transform: translate(0px, 40px);
+    transform: translate(0px, 65px);
 }
 
 @media (min-width: 1600px) {
