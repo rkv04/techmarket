@@ -14,7 +14,7 @@ const ForgotPasswordForm = () => {
 
         const result = await Forgot(email);
         if (result.success){
-            console.log(result, email);
+            navigate('/password-reset');
         }
         else{
             switch(result.error){

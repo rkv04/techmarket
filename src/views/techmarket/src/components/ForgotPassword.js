@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://b93332pg.beget.tech/api";
+export const API_URL = "http://b93332pg.beget.tech/api";
 
 export const Forgot = async (email) => {
     try{
@@ -8,7 +8,7 @@ export const Forgot = async (email) => {
             {
                 email
             });
-            if (response.data.message == "PASSWORD_RESET_LINK_SENT"){
+            if (response.data.message === "PASSWORD_RESET_LINK_SENT"){
                 return{
                     success: true,
                     data: response.data

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginForm from './pages/Auth.jsx';
 import RegisterForm from './pages/Register.jsx';
 import ForgotPasswordForm from './pages/forgotPassword.jsx';
+import ResetPasswordForm from './pages/resetPssowrd.jsx';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/password-forgot" element={<ForgotPasswordForm />} />
+        <Route path='/password-reset' element={<ResetPasswordForm />} />
         <Route
           path="/products"
           element={
