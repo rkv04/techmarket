@@ -68,22 +68,6 @@
     box-shadow: 0 0 5px 5px var(--background-blue);
 }
 
-.TestCart > div > button,
-#isOpen > button {
-    width: 80%;
-    border: 2px solid var(--text-blue);
-    border-radius: 5px;
-    background-color: var(--background-blue);
-    color: white;
-    font-size: 20px;
-    transition: all 0.1s ease-in-out;
-}
-
-.TestCart > div > button:hover,
-#isOpen > button:hover {
-    transform: scale(1.1);
-    background-color: var(--text-blue);
-}
 
 #notOpen {
     display: flex;

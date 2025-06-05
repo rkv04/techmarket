@@ -1,0 +1,39 @@
+.popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 300px;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.menu-item label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.error{
+    color: #d32f2f;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fdecea;
+    border-radius: 4px;
+}

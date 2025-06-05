@@ -8,7 +8,9 @@ export const Login = async (email, password) => {
         {
             email,
             password
-        });
+        },
+        {withCredentials: true}
+        );
         if (response.data.message === 'LOGIN_SUCCESS'){
             return{
                 success: true,

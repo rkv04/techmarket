@@ -1,25 +1,33 @@
 import './Layout.css'
-import searchLogo from '../assets/searchlogo.png';
+import settingsLogo from '../assets/setings.png';
 import userLogo from '../assets/cartlogo.png';
 import cartLogo from '../assets/userlogo.png';
 import VKLogo from '../assets/vklogo.png';
 import instagrammLogo from '../assets/instagrammlogo.png';
+import { useState } from 'react';
+import MenuSettingsPopup from '../components/menuSettingPopup';
 
-const Header = () => {
+const Header = ({onSettingsClick}) => {
+    const [showPopup, setShowPopup] = useState(false);
+
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
+    };
+
     return (
       <>
         <header className='Header'>
             <h1 className='Phone'>8-800-000-00-00</h1>
             <h1>ТехноМаркет</h1>
             <nav className='Navs'>
+              <button className='navbutton' onClick={onSettingsClick}>
+                <img className='logos' src={settingsLogo} alt="Настройки" />
+              </button>
               <a href="">
-                <img className='logos' src={searchLogo} alt="" />
+                <img className='logos' src={userLogo} alt="Пользователь" />
               </a>
               <a href="">
-                <img className='logos' src={userLogo} alt="" />
-              </a>
-              <a href="">
-                <img className='logos' src={cartLogo} alt="" />
+                <img className='logos' src={cartLogo} alt="Корзина" />
               </a>
             </nav>
         </header>
@@ -52,13 +60,17 @@ const Footer = () => {
 }
 
 const Layout = ({ children }) => {
-  return (
-    <div className='Layout'>
-      <Header />
-      <main className='Main'>{children}</main>
-      <Footer />
-    </div>
-  );
+    const [showPopup, setShowPopup] = useState(false);
+
+    return (
+        <div className='Layout'>
+            <Header onSettingsClick={() => setShowPopup(true)} />
+            <main className='Main'>{children}</main>
+            <Footer />
+
+            <MenuSettingsPopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
+        </div>
+    );
 };
 
 export default Layout;
