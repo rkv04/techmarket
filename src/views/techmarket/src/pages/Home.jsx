@@ -119,7 +119,7 @@ const Home = () => {
                             <TestCart key={product.id} product={product} />
                         ))
                     ) : (
-                        <div className="no-products">Товары не найдены</div>
+                        <div className="noProducts"><h1>Товары не найдены</h1></div>
                     )}
                 </div>
                 {pagination.totalPages > 1 && (
@@ -157,7 +157,46 @@ const Home = () => {
                             <option key={m.id} value={m.id}>{m.name}</option>
                         ))}
                     </select>
-                    
+                    <input
+                        type="number"
+                        placeholder="Цена от"
+                        onChange={(e) => handleFilterChange({ price_min: e.target.value })}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Цена до"
+                        onChange={(e) => handleFilterChange({ price_max: e.target.value })}
+                    />
+                    <div className="labels">
+                        <label>
+                            <input
+                                type="checkbox"
+                                onChange={(e) => handleFilterChange({ available: e.target.checked })}
+                            /> В наличии
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                onChange={(e) => handleFilterChange({ discount: e.target.checked })}
+                            /> Со скидкой
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                onChange={(e) => handleFilterChange({ new: e.target.checked })}
+                            /> Новинки
+                        </label>
+                    </div>
+                    <select onChange={(e) => handleFilterChange({ sort: e.target.value })}>
+                        <option value="">Сортировка</option>
+                        <option value="price">Цена</option>
+                        <option value="newness">Новизна</option>
+                    </select>
+                    <select onChange={(e) => handleFilterChange({ order: e.target.value })}>
+                        <option value="">Порядок</option>
+                        <option value="asc">По возрастанию</option>
+                        <option value="desc">По убыванию</option>
+                    </select>
                 </div>
             </div>
         </div>
