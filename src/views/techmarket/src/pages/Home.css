@@ -1,17 +1,29 @@
 .mainBlock {
+    position: relative;
     width: 66%;
-    height: 100%s;
     background-color: white;
     border: 2px solid #6EB2FF;
     border-radius: 20px;
     padding: 20px;
     overflow-y: auto;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.445);
+}
+
+.productGrid {
+    display: flex;
     flex-wrap: wrap;
     gap: 20px;
     align-content: flex-start;
-    box-sizing: border-box;
-    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.445);
+}
+
+.Pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .sideBar {
@@ -23,6 +35,38 @@
     overflow-y: auto;
     box-sizing: border-box;
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.445);
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    border: 1px solid var(--text-blue);
+    background: var(--background-blue);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.1s;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: var(--text-blue);
+    transform: scale(1.05);
+}
+
+.pagination button.active {
+    background: #1976d2;
+    color: white;
+    border-color: #1976d2;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 @media (max-width: 1200px) {
