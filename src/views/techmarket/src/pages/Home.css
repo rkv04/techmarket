@@ -27,6 +27,7 @@
 }
 
 .sideBar {
+    gap: 30px;
     width: 30%;
     height: 100%;
     background-color: white;
@@ -35,6 +36,20 @@
     overflow-y: auto;
     box-sizing: border-box;
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.445);
+}
+
+.filters{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters > *{
+    margin-bottom: 40px;
 }
 
 
