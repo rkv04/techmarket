@@ -11,7 +11,6 @@
     flex: 1;
     width: calc(100% - 2rem);
     height: 100%;
-    min-height: 0;
     padding: 1rem;
     box-sizing: border-box;
     gap: 20px;

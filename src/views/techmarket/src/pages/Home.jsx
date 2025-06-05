@@ -47,7 +47,15 @@ const Home = () => {
         setFilters(prev => ({ ...prev, ...newFilters }));
     };
 
-    if (loading) return <div className="loading">Загрузка товаров...</div>;
+    if (loading) {
+        return (
+            <div className="Main">
+                <div className="loading">
+                    <div className="spinner"></div>
+                </div>
+            </div>
+        );
+    }
     if (error) return <div className="error">Ошибка: {error}</div>;
 
     return(
