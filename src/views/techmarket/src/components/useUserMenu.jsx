@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const API_URL = "http://b93332pg.beget.tech/api";
@@ -7,15 +7,19 @@ export const useUserMenu = () => {
     const [menuItems, setMenuItems] = useState([]);
     const [error, setError] = useState('');
 
-    const fetchMenu = async () => {
+    const fetchMenu = useCallback(async () => {
         try {
             const response = await axios.get(`${API_URL}/user/menu`, {
-                withCredentials: true
+                withCredentials: true,
             });
             setMenuItems(response.data);
         } catch (err) {
             setError(err.message || 'Ошибка загрузки меню');
         }
+    }, []);
+
+    const refreshMenu = () => {
+        fetchMenu();
     };
 
     const toggleVisibility = (id) => {
@@ -30,7 +34,7 @@ export const useUserMenu = () => {
         try {
             const payload = menuItems.map(({ id, isHidden }) => ({ id, isHidden }));
             const response = await axios.put(
-                `${API_URL}/menu/user`,
+                `${API_URL}/user/menu`,
                 payload,
                 { withCredentials: true }
             );
@@ -46,5 +50,5 @@ export const useUserMenu = () => {
         fetchMenu();
     }, []);
 
-    return { menuItems, error, toggleVisibility, saveMenuChanges };
+    return { menuItems, error, toggleVisibility, saveMenuChanges, refreshMenu };
 };
