@@ -12,6 +12,7 @@ import Beauty from './pages/Beauty.jsx';
 import Health from './pages/Health.jsx';
 import Discounts from './pages/Discounts.jsx';
 import New from './pages/New.jsx';
+import Admin from './pages/Admin.jsx';
 
 function App() {
   return (
@@ -22,14 +23,15 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/password-forgot" element={<ForgotPasswordForm />} />
         <Route path="/password-reset" element={<ResetPasswordForm />} />
-        <Route element={<Layout />}>
-          <Route path="/products" element={<Home />} />
-          <Route path="/products/kitchen" element={<Kitchen />} />
-          <Route path="/products/house" element={<House />} />
-          <Route path="/products/beauty" element={<Beauty />} />
-          <Route path="/products/health" element={<Health />} />
-          <Route path="/products/discounts" element={<Discounts />} />
-          <Route path="/products/new" element={<New />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="products" element={<Home />} />
+          <Route path="products/kitchen" element={<Kitchen />} />
+          <Route path="products/house" element={<House />} />
+          <Route path="products/beauty" element={<Beauty />} />
+          <Route path="products/health" element={<Health />} />
+          <Route path="products/discounts" element={<Discounts />} />
+          <Route path="products/new" element={<New />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

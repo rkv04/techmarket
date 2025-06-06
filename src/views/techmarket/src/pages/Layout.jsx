@@ -7,8 +7,7 @@ import instagrammLogo from '../assets/instagrammlogo.png';
 import { useState } from 'react';
 import MenuSettingsPopup from '../components/menuSettingPopup';
 import { useUserMenu } from '../components/useUserMenu';
-import { Outlet } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 
 const Header = ({ onSettingsClick, menuItems }) => {
     return (
@@ -20,11 +19,11 @@ const Header = ({ onSettingsClick, menuItems }) => {
                     <button className='navbutton' onClick={onSettingsClick}>
                         <img className='logos' src={settingsLogo} alt="Настройки" />
                     </button>
+                    <Link to="/admin">
+                        <img className='logos' src={cartLogo} alt="Пользователь" />
+                    </Link>
                     <a href="">
-                        <img className='logos' src={userLogo} alt="Пользователь" />
-                    </a>
-                    <a href="">
-                        <img className='logos' src={cartLogo} alt="Корзина" />
+                        <img className='logos' src={userLogo} alt="Корзина" />
                     </a>
                 </nav>
             </header>
