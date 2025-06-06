@@ -7,6 +7,7 @@ import instagrammLogo from '../assets/instagrammlogo.png';
 import { useState } from 'react';
 import MenuSettingsPopup from '../components/menuSettingPopup';
 import { useUserMenu } from '../components/useUserMenu';
+import { Outlet } from 'react-router-dom';
 
 const Header = ({ onSettingsClick, menuItems }) => {
     return (
@@ -55,7 +56,7 @@ const Footer = () => {
     );
 };
 
-const Layout = ({ children }) => {
+const Layout = () => {
     const [showPopup, setShowPopup] = useState(false);
     const { menuItems, saveMenuChanges } = useUserMenu();
 
@@ -72,9 +73,10 @@ const Layout = ({ children }) => {
                 onSettingsClick={() => setShowPopup(true)}
                 menuItems={menuItems}
             />
-            <main className='Main'>{children}</main>
+            <main className='Main'>
+                <Outlet />
+            </main>
             <Footer />
-
             <MenuSettingsPopup
                 isOpen={showPopup}
                 onClose={() => setShowPopup(false)}
