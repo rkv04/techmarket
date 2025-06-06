@@ -7,6 +7,11 @@ import RegisterForm from './pages/Register.jsx';
 import ForgotPasswordForm from './pages/forgotPassword.jsx';
 import ResetPasswordForm from './pages/resetPssowrd.jsx';
 import Kitchen from './pages/Kitchen.jsx';
+import House from './pages/House.jsx';
+import Beauty from './pages/Beauty.jsx';
+import Health from './pages/Health.jsx';
+import Discounts from './pages/Discounts.jsx';
+import New from './pages/New.jsx';
 
 function App() {
   return (
@@ -20,6 +25,11 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/products" element={<Home />} />
           <Route path="/products/kitchen" element={<Kitchen />} />
+          <Route path="/products/house" element={<House />} />
+          <Route path="/products/beauty" element={<Beauty />} />
+          <Route path="/products/health" element={<Health />} />
+          <Route path="/products/discounts" element={<Discounts />} />
+          <Route path="/products/new" element={<New />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

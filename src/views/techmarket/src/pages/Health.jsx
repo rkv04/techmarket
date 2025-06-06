@@ -6,7 +6,7 @@ import { Pagination } from "../components/Pagination";
 
 const API_URL = "http://b93332pg.beget.tech/api";
 
-const Kitchen = () => {
+const Health = () => {
     const [products, setProducts] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [manufacturers, setManufacturers] = useState([]);
@@ -19,7 +19,7 @@ const Kitchen = () => {
     const [filters, setFilters] = useState({
         page: 1,
         search: "",
-        category: "1",
+        category: "4",
         subcategory: "",
         manufacturer: "",
         price_min: "",
@@ -48,7 +48,7 @@ const Kitchen = () => {
                 }
             });
 
-            const response = await axios.get(`${API_URL}/products?category=1/?${params.toString()}`);
+            const response = await axios.get(`${API_URL}/products?category=4/?${params.toString()}`);
             setProducts(response.data.products || []);
             setPagination({
                 currentPage: filters.page,
@@ -64,7 +64,7 @@ const Kitchen = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`${API_URL}/products/categories/1/subcategories`);
+            const response = await axios.get(`${API_URL}/products/categories/4/subcategories`);
             setSubcategories(response.data);
         } catch (err) {
             console.error("Ошибка при загрузке категорий:", err);
@@ -205,4 +205,4 @@ const Kitchen = () => {
     );
 };
 
-export default Kitchen;
+export default Health;
