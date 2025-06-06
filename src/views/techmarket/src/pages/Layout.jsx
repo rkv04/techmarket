@@ -8,6 +8,7 @@ import { useState } from 'react';
 import MenuSettingsPopup from '../components/menuSettingPopup';
 import { useUserMenu } from '../components/useUserMenu';
 import { Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = ({ onSettingsClick, menuItems }) => {
     return (
@@ -31,9 +32,13 @@ const Header = ({ onSettingsClick, menuItems }) => {
                 {menuItems
                     .filter(item => !item.isHidden)
                     .map(item => (
-                        <a key={item.id} href={item.url}>
-                            {item.category.name}
-                        </a>
+                        <Link 
+                            key={item.id} 
+                            to={`/products${item.url}`}
+                            className="nav-link"
+                        >
+                            {item.category?.name || 'Без названия'}
+                        </Link>
                     ))}
             </div>
         </>

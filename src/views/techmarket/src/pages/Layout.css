@@ -52,7 +52,7 @@
 }
 
 
-.Header2 a{
+.Header2 > .nav-link{
   flex: 1;
   text-decoration: none;
   background-color: white;
@@ -66,7 +66,7 @@
   transition: all 0.1s ease-in-out;
 }
 
-.Header2 a:hover{
+.Header2 > .nav-link{
   background-color: #c6e1ff;
   transform: scale(1.1);
   border-left: 1px solid var(--background-blue);
